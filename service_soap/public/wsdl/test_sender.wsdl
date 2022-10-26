@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:tns="urn:smssernderwsdl"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="urn:smssernderwsdl">
+    <types>
+        <xsd:schema targetNamespace="urn:sendwsdl">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/"></xsd:import>
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/"></xsd:import>
+        </xsd:schema>
+    </types>
+    
+    <message name="sendRequest">
+        <part name="phoneNumber" type="xsd:string"/>
+        <part name="text" type="xsd:string"/>
+    </message>
+    
+    <message name="sendResponse">
+        <part name="return" type="xsd:string"/>
+    </message>
+    
+    <portType name="sendwsdlPortType">
+        <operation name="send">
+            <documentation>Send Test</documentation>
+            <input message="tns:sendRequest"/>
+            <output message="tns:sendResponse"/>
+        </operation>
+    </portType>
+    
+    <binding name="sendwsdlBinding" type="tns:sendwsdlPortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="send">
+            <soap:operation soapAction="urn:arnleadservicewsdl#send" style="rpc"/>
+            
+            <input>
+                <soap:body use="encoded" namespace="urn:sendwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            
+            <output>
+                <soap:body use="encoded" namespace="urn:sendwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+    </binding>
+    
+    <service name="sendwsdl">
+        <port name="sendwsdlPort" binding="tns:sendwsdlBinding">
+            <soap:address location="http://127.0.0.1:8000/service/test/send"/>
+        </port>
+    </service>
+</definitions>
