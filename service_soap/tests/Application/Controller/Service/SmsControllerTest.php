@@ -6,7 +6,7 @@ namespace App\Tests\Controller\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class SmsControllerTest extends WebTestCase
+class SoapControllerTest extends WebTestCase
 {
     public function testSend(): void
     {
