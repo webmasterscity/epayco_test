@@ -4,7 +4,9 @@ namespace App\Command;
 
 use App\Entity\Clients;
 use App\Entity\Users;
+use App\Service\Soap\BalanceSoap;
 use App\Service\Soap\ClientsSoap;
+use App\Service\Soap\PayConfirmSoap;
 use App\Service\Soap\PaySoap;
 use App\Service\Soap\RechargeSoap;
 use App\Service\Soap\TestSoap;
@@ -38,10 +40,17 @@ class TestCommand extends Command
         /*  $c = new RechargeSoap($this->doctrine);
         $c->recharge("18671986", "4145138790", -2000);*/
         //$this->enviarEmail();
-        $c = new PaySoap($this->doctrine);
-        $c->pay("18671986", "4145138790", 50);
 
+        /* $c = new PaySoap($this->doctrine);
+        $c->pay("18671986", "4145138790", 50);*/
+        // echo "------------------";
+        /*
+        $c = new PayConfirmSoap($this->doctrine);
+        $c->payConfirm("286973", "1ed56398-c413-6d12-bf60-00090faa0001");
+*/
 
+        $c = new BalanceSoap($this->doctrine);
+        $c->balance("18671986", "4145138790");
         return Command::SUCCESS;
     }
 

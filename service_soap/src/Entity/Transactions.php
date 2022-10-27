@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +36,13 @@ class Transactions
      * @ORM\Column(name="amount", type="decimal", precision=10, scale=2, nullable=true)
      */
     private $amount;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
+     */
+    private $createdAt = 'CURRENT_TIMESTAMP';
 
     /**
      * @var \Clients
@@ -71,6 +79,18 @@ class Transactions
     public function setAmount(?string $amount): self
     {
         $this->amount = $amount;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = new DateTime();
 
         return $this;
     }

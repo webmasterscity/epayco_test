@@ -25,13 +25,6 @@ class Clients
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=200, nullable=false)
-     */
-    private $name;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="document", type="string", length=45, nullable=false)
      */
     private $document;
@@ -42,6 +35,13 @@ class Clients
      * @ORM\Column(name="phone", type="string", length=20, nullable=false)
      */
     private $phone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=200, nullable=false)
+     */
+    private $name;
 
     /**
      * @var \Users
@@ -56,17 +56,6 @@ class Clients
     public function getId(): ?string
     {
         return $this->id;
-    }
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getDocument(): ?string
@@ -89,6 +78,18 @@ class Clients
     public function setPhone(string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

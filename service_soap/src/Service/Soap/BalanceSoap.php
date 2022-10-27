@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace App\Service\Soap;
 
 use App\Entity\Clients;
+use App\Entity\Sessions;
 use App\Entity\Transactions;
 use App\Entity\Users;
 use App\Entity\Wallets;
 use App\Service\Api;
+use App\Service\Email\EmailService;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\Session\Session;
 
-class RechargeSoap extends Api
+class BalanceSoap extends Api
 {
     public $doctrine;
 
@@ -25,10 +29,10 @@ class RechargeSoap extends Api
     }
 
 
-    public function recharge(string $document, string $phone, string $amount)
+    public function balance(string $document, string $phone)
     {
 
-        if (empty($document) || empty($phone) || empty($amount)) {
+        if (empty($document) || empty($phone)) {
 
             $this->error("Todos los campos son requeridos", 200);
         } else {
@@ -45,25 +49,28 @@ class RechargeSoap extends Api
                     ->setParameter('phone', $phone);
 
                 $res = $query->getResult();
-                if (count($res) == 1) {
-                    $clients = $entityManager->getRepository(Clients::class)->find($res[0]['id']);
 
-                    $transaction = new Transactions();
-                    $transaction->setAmount($amount)
-                    ->setClients($clients)
-                    ->setCreatedAt();
-                    $entityManager->persist($transaction);
-                    $entityManager->flush();
-                    echo $this->success("Recargado correctamente");
+
+
+
+
+
+                if (count($res) == 1) {
+
+                    $resWallet = Wallets::getBalanceWalletByClientId($res[0]['id'], $entityManager);
+
+                    $data = [
+                        "balance" => $resWallet[0]['balance']
+                    ];
+                    echo $this->success("Su balance es", $data);
                 } else {
-                    echo $this->error("Sus datos son incorrectos", 104);
+                    echo $this->error("Sus datos son incorrectos", 111);
                 }
             } catch (Exception $e) {
-                echo $this->error("No podemos recargar su saldo", 103);
+                echo $this->error("No podemos monstrar su balance", 110);
                 throw $e;
             }
         }
-
 
 
         return "true";

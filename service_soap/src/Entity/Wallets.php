@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Wallets
  *
- * @ORM\Table(name="wallets", indexes={@ORM\Index(name="fk_wallets_clients1_idx", columns={"clients_id"})})
+ * @ORM\Table(name="wallets", indexes={@ORM\Index(name="fk_wallets_currencies1_idx", columns={"currencies_id"}), @ORM\Index(name="fk_wallets_clients1_idx", columns={"clients_id"})})
  * @ORM\Entity
  */
 class Wallets
@@ -29,6 +29,15 @@ class Wallets
      */
     private $balance = '0.00';
 
+    /**
+     * @var \Currencies
+     *
+     * @ORM\ManyToOne(targetEntity="Currencies")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="currencies_id", referencedColumnName="id")
+     * })
+     */
+    private $currencies;
 
     /**
      * @var \Clients
@@ -57,8 +66,17 @@ class Wallets
         return $this;
     }
 
+    public function getCurrencies(): ?Currencies
+    {
+        return $this->currencies;
+    }
 
+    public function setCurrencies(?Currencies $currencies): self
+    {
+        $this->currencies = $currencies;
 
+        return $this;
+    }
 
     public function getClients(): ?Clients
     {
@@ -70,6 +88,17 @@ class Wallets
         $this->clients = $clients;
 
         return $this;
+    }
+    public static function getBalanceWalletByClientId($clientId, $entityManager)
+    {
+        $query = $entityManager->createQuery(
+            'SELECT w.balance
+        FROM App\Entity\Wallets w
+        WHERE w.clients = :clients_id AND w.currencies= :currencies_id'
+        )->setParameter('clients_id', $clientId)
+            ->setParameter('currencies_id', 1);
+
+        return $query->getResult();
     }
 
 

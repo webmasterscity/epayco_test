@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Soap;
 
 use App\Entity\Clients;
+use App\Entity\Sessions;
 use App\Entity\Transactions;
 use App\Entity\Users;
 use App\Entity\Wallets;
@@ -15,7 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Ramsey\Uuid\Uuid;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 class PaySoap extends Api
 {
     public $doctrine;
@@ -29,6 +30,10 @@ class PaySoap extends Api
 
     public function pay(string $document, string $phone, string $amount)
     {
+        $session = new Session();
+        $session->start();
+
+  
 
         if (empty($document) || empty($phone) || empty($amount)) {
 
@@ -49,28 +54,44 @@ class PaySoap extends Api
                 $res = $query->getResult();
                 if (count($res) == 1) {
                     $clientId = $res[0]['id'];
-                    $client = $entityManager->getRepository(Clients::class)->find($clientId);
-                    $usersId = $client->getUsers()->getId();
 
-                    $user = $entityManager->getRepository(Users::class)->find($usersId);
-                    $token = $this->generateToken();
-                    $sessionId = $this->generateUUID();
-                    $_SESSION['pay_id'][$clientId] = $sessionId;
+                    $resWallets = Wallets::getBalanceWalletByClientId($clientId, $entityManager);
 
-                    $user->setToken(strval($token));
-                    $entityManager->flush();
-
-                    EmailService::enviarEmail($user->getEmail(), "Token Epayco", "<b>" . $token . "</b>");
-                    $data = [
-                        "token" => $token,
-                        "session_id" => $sessionId
-                    ];
+                    if ($resWallets[0]['balance'] >= $amount) {
 
 
+                        $client = $entityManager->getRepository(Clients::class)->find($clientId);
+                        $usersId = $client->getUsers()->getId();
+
+                        $user = $entityManager->getRepository(Users::class)->find($usersId);
+                        $token = $this->generateToken();
+                        $user->setToken(strval($token));
+                        $entityManager->flush();
 
 
+                        $sessionId = $this->generateUUID();
+                        $session = new Sessions();
+                        $session->setAmount($amount)
+                        ->setClients($client)
+                        ->setUuid(strval($sessionId))
+                        ->setExpiresAt();
 
-                    echo $this->success("Se ha enviado un correo ", $data);
+                        $entityManager->persist($session);
+                        $entityManager->flush();
+
+                        // EmailService::enviarEmail($user->getEmail(), "Token Epayco", "<b>" . $token . "</b>");
+                        $data = [
+                                "token" => $token,
+                                "session_id" => $sessionId
+                            ];
+
+                        echo $this->success("Se ha enviado un token de verificación a tu correo ", $data);
+                    } else {
+                        echo $this->error("Disculpe, saldo insuficiente", 105);
+                    }
+
+                    
+
                 } else {
                     echo $this->error("Sus datos son incorrectos", 104);
                 }
