@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://127.0.0.1:8000/service/test/send"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="test" targetNamespace="http://127.0.0.1:8000/service/test/send">
+    <types>
+        <xsd:schema targetNamespace="http://127.0.0.1:8000/service/test/send"/>
+    </types>
+    <portType name="testPort">
+        <operation name="send">
+            <documentation>send</documentation>
+            <input message="tns:sendIn"/>
+            <output message="tns:sendResponse"/>
+        </operation>
+    </portType>
+    <binding name="testBinding" type="tns:testPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="send">
+            <soap:operation soapAction="http://127.0.0.1:8000/service/test/send#send"/>
+            <input>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://127.0.0.1:8000/service/test/send"/>
+            </input>
+        </operation>
+    </binding>
+    <service name="testService">
+        <port name="testPort" binding="tns:testBinding">
+            <soap:address location="http://127.0.0.1:8000/service/test/send"/>
+        </port>
+    </service>
+    <message name="sendIn">
+        <part name="phoneNumber" type="xsd:anyType"/>
+        <part name="text" type="xsd:anyType"/>
+        <part name="otro" type="xsd:anyType"/>
+    </message>
+    <message name="sendResponse">
+        <part name="return" type="xsd:string"/>
+    </message>
+</definitions>

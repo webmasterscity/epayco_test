@@ -6,10 +6,11 @@ namespace App\Service\Soap;
 
 class TestSoap
 {
-    public function send(string $phoneNumber, string $text): string
-    {
-        // SMS sending process...
 
-        return sprintf('%s el numero es "%s"', $text, $phoneNumber);
+    public function send(string $phoneNumber, string $text, string $otro): string
+    {
+
+        return sprintf('%s el numero es "%s" %s', $text, $phoneNumber, $otro);
     }
+
 }

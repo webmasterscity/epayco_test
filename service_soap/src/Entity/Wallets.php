@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,18 +30,14 @@ class Wallets
     private $balance = '0.00';
 
     /**
-     * @var \DateTime|null
+     * @var \Currencies
      *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true, options={"default"="CURRENT_TIMESTAMP"})
+     * @ORM\ManyToOne(targetEntity="Currencies")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="currencies_id", referencedColumnName="id")
+     * })
      */
-    private $createdAt = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+    private $currencies;
 
     /**
      * @var \Clients
@@ -52,15 +49,46 @@ class Wallets
      */
     private $clients;
 
-    /**
-     * @var \Currencies
-     *
-     * @ORM\ManyToOne(targetEntity="Currencies")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="currencies_id", referencedColumnName="id")
-     * })
-     */
-    private $currencies;
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+
+    public function getBalance(): ?string
+    {
+        return $this->balance;
+    }
+
+    public function setBalance(?string $balance): self
+    {
+        $this->balance = $balance;
+
+        return $this;
+    }
+
+    public function getCurrencies(): ?Currencies
+    {
+        return $this->currencies;
+    }
+
+    public function setCurrencies(?Currencies $currencies): self
+    {
+        $this->currencies = $currencies;
+
+        return $this;
+    }
+
+    public function getClients(): ?Clients
+    {
+        return $this->clients;
+    }
+
+    public function setClients(?Clients $clients): self
+    {
+        $this->clients = $clients;
+
+        return $this;
+    }
 
 
 }

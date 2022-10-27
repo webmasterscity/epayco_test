@@ -14,8 +14,8 @@ class TestSoapController extends AbstractController
     #[Route('/service/test/send', 'test_send')]
     public function send(TestSoap $testSoap): Response
     {
-        // absolute path: /public/wsdl/test_sender.wsdl
-        $soapServer = new \SoapServer('wsdl/test_sender.wsdl');
+        // absolute path: /public/wsdl/
+        $soapServer = new \SoapServer('wsdl/test_senda.wsdl');
         $soapServer->setObject($testSoap);
 
         $response = new Response();

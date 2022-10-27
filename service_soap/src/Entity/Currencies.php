@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,19 +43,46 @@ class Currencies
      */
     private $symbolIso;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $createdAt = 'CURRENT_TIMESTAMP';
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSymbol(): ?string
+    {
+        return $this->symbol;
+    }
+
+    public function setSymbol(?string $symbol): self
+    {
+        $this->symbol = $symbol;
+
+        return $this;
+    }
+
+    public function getSymbolIso(): ?string
+    {
+        return $this->symbolIso;
+    }
+
+    public function setSymbolIso(?string $symbolIso): self
+    {
+        $this->symbolIso = $symbolIso;
+
+        return $this;
+    }
 
 
 }

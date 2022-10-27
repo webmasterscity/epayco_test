@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,6 +25,13 @@ class Clients
     /**
      * @var string
      *
+     * @ORM\Column(name="name", type="string", length=200, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="document", type="string", length=45, nullable=false)
      */
     private $document;
@@ -36,20 +44,6 @@ class Clients
     private $phone;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $createdAt = 'CURRENT_TIMESTAMP';
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
-     */
-    private $updatedAt = 'CURRENT_TIMESTAMP';
-
-    /**
      * @var \Users
      *
      * @ORM\ManyToOne(targetEntity="Users")
@@ -58,6 +52,58 @@ class Clients
      * })
      */
     private $users;
+
+    public function getId(): ?string
+    {
+        return $this->id;
+    }
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDocument(): ?string
+    {
+        return $this->document;
+    }
+
+    public function setDocument(string $document): self
+    {
+        $this->document = $document;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getUsers(): ?Users
+    {
+        return $this->users;
+    }
+
+    public function setUsers(?Users $users): self
+    {
+        $this->users = $users;
+
+        return $this;
+    }
 
 
 }
