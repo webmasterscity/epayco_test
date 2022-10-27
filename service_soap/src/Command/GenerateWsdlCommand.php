@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Entity\Clients;
 use App\Service\Soap\ClientsSoap;
+use App\Service\Soap\PaySoap;
 use App\Service\Soap\RechargeSoap;
 use App\Service\Soap\TestSoap;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -23,9 +24,9 @@ class GenerateWsdlCommand extends Command
 
         $autodiscover = new AutoDiscover();
         $autodiscover
-            ->setClass(RechargeSoap::class)
-            ->setUri('http://127.0.0.1:8000/soap/wallet/recharge')
-            ->setServiceName('wallet');
+            ->setClass(PaySoap::class)
+            ->setUri('http://127.0.0.1:8000/soap/wallet/pay')
+            ->setServiceName('pay');
 
         $wsdl = $autodiscover->generate();
 
@@ -33,7 +34,7 @@ class GenerateWsdlCommand extends Command
         // echo $wsdl->toXml();
 
         // Or dump it to a file; this is a good way to cache the WSDL
-        $wsdl->dump("public/wsdl/recharge_c.wsdl");
+        $wsdl->dump("public/wsdl/pay.wsdl");
 
         // Or create a DOMDocument, which you can then manipulate:
         //$dom = $wsdl->toDomDocument();

@@ -6,12 +6,13 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class Api extends ServiceEntityRepository
 {
-    public function success($msj = "")
+    public function success($msj = "", $data = [])
     {
         $response = [
             'success' => true,
             'cod_error' => "00",
-            'message' => $msj
+            'message' => $msj,
+            'data' => $data
         ];
         return $this->response($response);
     }
