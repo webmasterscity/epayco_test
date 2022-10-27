@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://127.0.0.1:8000/wallet/recharge"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" name="wallet" targetNamespace="http://127.0.0.1:8000/wallet/recharge">
+    <types>
+        <xsd:schema targetNamespace="http://127.0.0.1:8000/wallet/recharge"/>
+    </types>
+    <portType name="walletPort">
+        <operation name="recharge">
+            <documentation>recharge</documentation>
+            <input message="tns:rechargeIn"/>
+            <output message="tns:sendResponse"/>
+        </operation>
+    </portType>
+    <binding name="walletBinding" type="tns:walletPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="recharge">
+            <soap:operation soapAction="http://127.0.0.1:8000/wallet/recharge#recharge"/>
+            <input>
+                <soap:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="http://127.0.0.1:8000/wallet/recharge"/>
+            </input>
+        </operation>
+    </binding>
+    <service name="walletService">
+        <port name="walletPort" binding="tns:walletBinding">
+            <soap:address location="http://127.0.0.1:8000/wallet/recharge"/>
+        </port>
+    </service>
+    <message name="rechargeIn">
+        <part name="document" type="xsd:anyType"/>
+        <part name="phone" type="xsd:anyType"/>
+        <part name="amount" type="xsd:anyType"/>
+    </message>
+    <message name="sendResponse">
+        <part name="return" type="xsd:string"/>
+    </message>
+</definitions>

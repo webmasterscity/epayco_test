@@ -5,6 +5,7 @@ namespace App\Command;
 use App\Entity\Clients;
 use App\Entity\Users;
 use App\Service\Soap\ClientsSoap;
+use App\Service\Soap\RechargeSoap;
 use App\Service\Soap\TestSoap;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -27,8 +28,12 @@ class TestCommand extends Command
     {
 
 
-        $c = new ClientsSoap($this->doctrine);
-        $c->register("18671986", "leonardo", "ds000082223122@gmail.com", "4145138790");
+
+        // $c = new ClientsSoap($this->doctrine);
+        //$c->register("18671986", "leonardo", "ds000082@gmail.com", "4145138790");
+
+        $c = new RechargeSoap($this->doctrine);
+        $c->recharge("18671986", "4145138790", -2000);
 
 
 

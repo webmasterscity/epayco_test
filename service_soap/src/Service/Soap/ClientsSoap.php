@@ -6,6 +6,7 @@ namespace App\Service\Soap;
 
 use App\Entity\Clients;
 use App\Entity\Users;
+use App\Entity\Wallets;
 use App\Service\Api;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,9 +40,17 @@ class ClientsSoap extends Api
                 WHERE u.email = :email'
             )->setParameter('email', $email);
 
-            $res = $query->getResult();
+            $resUser = $query->getResult();
 
-            if (count($res) == 0) {
+            $query = $entityManager->createQuery(
+                'SELECT 1
+                FROM App\Entity\Clients c
+                WHERE c.document = :document'
+            )->setParameter('document', $document);
+
+            $resClient = $query->getResult();
+
+            if (count($resUser) == 0 && count($resClient) == 0) {
                 $entityManager->getConnection()->beginTransaction(); // suspend auto-commit
                 try {
                     $user = new Users();
@@ -56,6 +65,11 @@ class ClientsSoap extends Api
                     $client->setPhone($phone);
                     $client->setUsers($user);
                     $entityManager->persist($client);
+                    $entityManager->flush();
+
+                    $wallet = new Wallets();
+                    $wallet->setClients($client);
+                    $entityManager->persist($wallet);
                     $entityManager->flush();
 
                     $entityManager->getConnection()->commit();
