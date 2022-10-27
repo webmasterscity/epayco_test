@@ -18,7 +18,7 @@ class ClientsSoapController extends AbstractController
     #[Route('/soap/client/register', 'soap_client_register')]
     public function register(ClientsSoap $clientsSoap): Response
     {
-        return CoreSoap::exceSoap('wsdl/clients_b.wsdl', $clientsSoap);
+        return CoreSoap::exceSoap('wsdl/clients.wsdl', $clientsSoap);
     }
 
 

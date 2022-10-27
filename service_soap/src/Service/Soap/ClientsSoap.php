@@ -73,14 +73,14 @@ class ClientsSoap extends Api
                     $entityManager->flush();
 
                     $entityManager->getConnection()->commit();
-                    echo $this->success("Registrado correctamente", 201);
+                    return $this->success("Registrado correctamente", 201);
                 } catch (Exception $e) {
                     $entityManager->getConnection()->rollBack();
-                    echo $this->error("Intente mas tarde", 101);
+                    return $this->error("Intente mas tarde", 101);
                     throw $e;
                 }
             } else {
-                echo $this->error("El cliente ya se encuentra registrado", 100);
+                return $this->error("El cliente ya se encuentra registrado", 100);
             }
         }
 

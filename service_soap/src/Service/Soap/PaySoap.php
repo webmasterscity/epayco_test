@@ -85,18 +85,18 @@ class PaySoap extends Api
                                 "session_id" => $sessionId
                             ];
 
-                        echo $this->success("Se ha enviado un token de verificación a tu correo ", $data);
+                        return $this->success("Se ha enviado un token de verificación a tu correo ", $data);
                     } else {
-                        echo $this->error("Disculpe, saldo insuficiente", 105);
+                        return $this->error("Disculpe, saldo insuficiente", 105);
                     }
 
                     
 
                 } else {
-                    echo $this->error("Sus datos son incorrectos", 104);
+                    return $this->error("Sus datos son incorrectos", 104);
                 }
             } catch (Exception $e) {
-                echo $this->error("No podemos recargar su saldo", 103);
+                return $this->error("No podemos recargar su saldo", 103);
                 throw $e;
             }
         }

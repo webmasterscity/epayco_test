@@ -54,12 +54,12 @@ class RechargeSoap extends Api
                     ->setCreatedAt();
                     $entityManager->persist($transaction);
                     $entityManager->flush();
-                    echo $this->success("Recargado correctamente");
+                    return $this->success("Recargado correctamente");
                 } else {
-                    echo $this->error("Sus datos son incorrectos", 104);
+                    return $this->error("Sus datos son incorrectos", 104);
                 }
             } catch (Exception $e) {
-                echo $this->error("No podemos recargar su saldo", 103);
+                return $this->error("No podemos recargar su saldo", 103);
                 throw $e;
             }
         }

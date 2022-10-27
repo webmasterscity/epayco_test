@@ -62,12 +62,12 @@ class BalanceSoap extends Api
                     $data = [
                         "balance" => $resWallet[0]['balance']
                     ];
-                    echo $this->success("Su balance es", $data);
+                    return $this->success("Su balance es", $data);
                 } else {
-                    echo $this->error("Sus datos son incorrectos", 111);
+                    return $this->error("Sus datos son incorrectos", 111);
                 }
             } catch (Exception $e) {
-                echo $this->error("No podemos monstrar su balance", 110);
+                return $this->error("No podemos monstrar su balance", 110);
                 throw $e;
             }
         }

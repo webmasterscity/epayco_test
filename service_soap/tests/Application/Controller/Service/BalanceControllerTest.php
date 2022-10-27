@@ -15,8 +15,8 @@ class BalanceControllerTest extends WebTestCase
 
             $soapClient = new \SoapClient('http://127.0.0.1:8000/soap/wallet/balance?wsdl');
             $result = $soapClient->balance('18671986', '4145138790');
-
-            $this->assertSame('true', $result);
+            $data = json_decode($result);
+            $this->assertSame('00', $data->cod_error);
         } catch (\SoapFault $exception) {
             dump($soapClient->__getLastRequest());
             dump($soapClient->__getLastResponse());

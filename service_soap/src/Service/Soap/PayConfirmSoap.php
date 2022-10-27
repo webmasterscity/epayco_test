@@ -55,15 +55,15 @@ class PayConfirmSoap extends Api
                         $session->setExpires();
                         $entityManager->flush();
 
-                        echo $this->success("Pago realizado exitosamente");
+                        return $this->success("Pago realizado exitosamente");
                     } else {
-                        echo $this->error("Su token es incorrecto", 106);
+                        return $this->error("Su token es incorrecto", 106);
                     }
                 } else {
-                    echo $this->error("Su token a expirado", 105);
+                    return $this->error("Su token a expirado", 105);
                 }
             } catch (Exception $e) {
-                echo $this->error("No podemos recargar su saldo", 103);
+                return $this->error("No podemos recargar su saldo", 103);
                 throw $e;
             }
         }

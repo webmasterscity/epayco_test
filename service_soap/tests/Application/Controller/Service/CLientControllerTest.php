@@ -15,8 +15,8 @@ class ClientControllerTest extends WebTestCase
 
             $soapClient = new \SoapClient('http://127.0.0.1:8000/soap/client/register?wsdl');
             $result = $soapClient->register('18671986', 'Leonardo Melendez', 'ds000082@gmail.com', '584145138790');
-
-            $this->assertSame('true', $result);
+            $data = json_decode($result);
+            $this->assertSame(100, $data->cod_error);
         } catch (\SoapFault $exception) {
             dump($soapClient->__getLastRequest());
             dump($soapClient->__getLastResponse());

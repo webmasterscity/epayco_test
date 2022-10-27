@@ -15,6 +15,6 @@ class PaySoapController extends AbstractController
     #[Route('/soap/wallet/pay', 'soap_wallet_pay')]
     public function recharge(PaySoap $paySoap): Response
     {
-        return CoreSoap::exceSoap('wsdl/pay_b.wsdl', $paySoap);
+        return CoreSoap::exceSoap('wsdl/pays.wsdl', $paySoap);
     }
 }

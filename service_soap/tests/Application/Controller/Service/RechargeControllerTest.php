@@ -16,7 +16,7 @@ class RechargeControllerTest extends WebTestCase
             $soapClient = new \SoapClient('http://127.0.0.1:8000/soap/wallet/recharge?wsdl');
             $result = $soapClient->recharge('18671986', '4145138790', '5000');
 
-            $this->assertSame('true', $result);
+            $this->assertSame('{"success":true,"cod_error":"00","message":"Recargado correctamente","data":[]}', $result);
         } catch (\SoapFault $exception) {
             dump($soapClient->__getLastRequest());
             dump($soapClient->__getLastResponse());
