@@ -79,7 +79,7 @@ class PaySoap extends Api
                         $entityManager->persist($session);
                         $entityManager->flush();
 
-                        // EmailService::enviarEmail($user->getEmail(), "Token Epayco", "<b>" . $token . "</b>");
+                        EmailService::enviarEmail($user->getEmail(), "Token Epayco", "<b>" . $token . "</b>");
                         $data = [
                                 "token" => $token,
                                 "session_id" => $sessionId

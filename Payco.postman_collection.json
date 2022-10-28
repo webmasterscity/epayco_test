@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "d352bd96-c0db-4714-a6d1-6ff8a37a1004",
+		"name": "Payco",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9471671"
+	},
+	"item": [
+		{
+			"name": "SOAP",
+			"item": [
+				{
+					"name": "balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8002/api/balance?phone=4145138790&document=18671986",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"balance"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "4145138790"
+								},
+								{
+									"key": "document",
+									"value": "18671986"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "client",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8002/api/client?phone=4145138797&document=18671985&name=cantinflas&email=webmasterscity@hotmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"client"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "4145138797"
+								},
+								{
+									"key": "document",
+									"value": "18671985"
+								},
+								{
+									"key": "name",
+									"value": "cantinflas"
+								},
+								{
+									"key": "email",
+									"value": "webmasterscity@hotmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recharge",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8002/api/recharge?phone=4145138797&document=18671985&amount=1500",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"recharge"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "4145138797"
+								},
+								{
+									"key": "document",
+									"value": "18671985"
+								},
+								{
+									"key": "amount",
+									"value": "1500"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pay",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8002/api/pay?phone=4145138797&document=18671985&amount=15",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"pay"
+							],
+							"query": [
+								{
+									"key": "phone",
+									"value": "4145138797"
+								},
+								{
+									"key": "document",
+									"value": "18671985"
+								},
+								{
+									"key": "amount",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payConfirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8002/api/payConfirm?token=519081&sessionId=1ed5657b-de9e-61c0-b1f9-00090faa0001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8002",
+							"path": [
+								"api",
+								"payConfirm"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "519081"
+								},
+								{
+									"key": "sessionId",
+									"value": "1ed5657b-de9e-61c0-b1f9-00090faa0001"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

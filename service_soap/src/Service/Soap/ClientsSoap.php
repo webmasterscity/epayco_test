@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Soap;
 
 use App\Entity\Clients;
+use App\Entity\Currencies;
 use App\Entity\Users;
 use App\Entity\Wallets;
 use App\Service\Api;
@@ -69,6 +70,8 @@ class ClientsSoap extends Api
 
                     $wallet = new Wallets();
                     $wallet->setClients($client);
+                    $currencies = $entityManager->getRepository(Currencies::class)->find(1);
+                    $wallet->setCurrencies($currencies);
                     $entityManager->persist($wallet);
                     $entityManager->flush();
 

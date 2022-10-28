@@ -34,9 +34,9 @@ class TestCommand extends Command
 
 
 
-        // $c = new ClientsSoap($this->doctrine);
-        //$c->register("18671986", "leonardo", "ds000082@gmail.com", "4145138790");
-
+        $c = new ClientsSoap($this->doctrine);
+        echo $c->register("18671982", "leonardo", "corporacionlemez@gmail.com", "4145138793");
+       
         /*  $c = new RechargeSoap($this->doctrine);
         $c->recharge("18671986", "4145138790", -2000);*/
         //$this->enviarEmail();
@@ -47,10 +47,10 @@ class TestCommand extends Command
         /*
         $c = new PayConfirmSoap($this->doctrine);
         $c->payConfirm("286973", "1ed56398-c413-6d12-bf60-00090faa0001");
-*/
 
+/*
         $c = new BalanceSoap($this->doctrine);
-        $c->balance("18671986", "4145138790");
+        $c->balance("18671986", "4145138790");*/
         return Command::SUCCESS;
     }
 
