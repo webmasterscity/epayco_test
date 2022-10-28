@@ -42,3 +42,4 @@ php bin/phpunit
 
 Se adjunta Colección POSTMAN
 
+Se adjunta Modelo entidad relación (MER)
